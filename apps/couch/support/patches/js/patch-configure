@@ -3470,7 +3470,7 @@
    rm -rf conftest*
    MOZ_NATIVE_NSPR=1
  else
-@@ -13265,6 +13252,12 @@
+@@ -13265,6 +13252,15 @@
  # Individual module options
  
  case "$target_cpu" in
@@ -3478,20 +3478,30 @@
 +    MOZ_ARM_ARCH=armv5
 +  ;;
 +  armv6*)
-+    MOZ_ARM_ARCH=armv6
++    MOZ_ARM_ARCH=armv6l
++  ;;
++  armv7*)
++    MOZ_ARM_ARCH=armv7l
 +  ;;
    arm*)
      MOZ_ARM_ARCH=armv7
    ;;
-@@ -13339,6 +13332,13 @@
+@@ -13339,6 +13332,20 @@
    esac
  else
    case "$target_cpu" in
 +    armv6*)
 +      if test "$GNU_CC"; then
-+        CFLAGS="$CFLAGS -march=armv6j -mthumb-interwork -msoft-float"
-+        CXXFLAGS="$CXXFLAGS -march=armv6j -mthumb-interwork -msoft-float"
-+        ASFLAGS="$ASFLAGS -march=armv6j -mthumb-interwork -msoft-float"
++        CFLAGS="-O2 -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard"
++        CXXFLAGS="-O2 -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard"
++        ASFLAGS="-O2 -mcpu=arm1176jzf-s -mfpu=vfp -mfloat-abi=hard"
++      fi
++      ;;
++    armv7*)
++      if test "$GNU_CC"; then
++        CFLAGS="$CFLAGS  -march=armv7 -mtune=cortex-a9 -mfpu=neon "
++        CXXFLAGS="$CXXFLAGS  -march=armv7 -mtune=cortex-a9 -mfpu=neon "
++        ASFLAGS="$ASFLAGS  -march=armv7 -mtune=cortex-a9 -mfpu=neon "
 +      fi
 +      ;;
      arm*)
